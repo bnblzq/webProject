@@ -1,0 +1,70 @@
+#docker-compose的版本
+version: "3"
+
+    #定义服务
+services:
+
+
+    mysql:
+        image: mysql:5.7
+        ports:
+           - "33061:3306"
+        #环境变量
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+            #初始化数据库名称
+            #MYSQL_DATABASE: makesql
+        container_name: my_mysql
+        networks:
+            - net
+        restart: always
+        #数据卷映射关系，把本机的./mysql/db目录映射到容器的/var/lib/mysql
+        volumes:
+            - "./mysql/data/:/var/lib/mysql"
+            - "./mysql/config/my.cnf:/etc/my.cnf"
+            - "./mysql/:/docker-entrypoint-initdb.d"
+        #该选项中的参数会覆盖Dockerfile中的CMD中的命令参数
+        #lower_case_table_names表示表名不区分大小写
+        command: mysqld --lower_case_table_names=1
+
+
+    redis:
+        image: redis:3.2
+        ports:
+            # - "5672:5672"
+            # - "15672:15672"
+            - "6379:6379"
+        container_name: my_redis
+        networks:
+            - net
+        restart: always
+        #启动redis服务并添加密码为：123456,并开启redis的持久化
+        command: redis-server --appendonly yes
+
+    go:
+        build: 
+            context: ./golang/
+            dockerfile: Dockerfile
+        #image: scratch
+        ports:
+            - "8080:8080"
+        container_name: my_go
+        depends_on:
+            - mysql
+            - redis
+        links:
+            - mysql
+            - redis
+        networks:
+            - net
+        # volumes 是把本地所有的源码都映射到容器中。仅在本地开发时使用，上线部署时不可
+        #volumes:
+        #    - ./golang/src/:/go/src
+        #working_dir: /go/src
+        # entrypoint: ["/go/src/sproxy"]
+        tty: true
+
+
+networks:
+    net:
+        driver: bridge
