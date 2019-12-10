@@ -26,7 +26,14 @@ services:
         #该选项中的参数会覆盖Dockerfile中的CMD中的命令参数
         #lower_case_table_names表示表名不区分大小写
         command: mysqld --lower_case_table_names=1
-
+    
+    ubuntu:
+        image: ubuntu:18.04
+        container_name: my_ubuntu
+        networks:
+            - net
+        restart: always
+        command: tail -F anything 
 
     redis:
         image: redis:latest
@@ -35,8 +42,8 @@ services:
             # - "15672:15672"
             - "6379:6379"
         container_name: my_redis
-        #networks:
-        #    - net
+        networks:
+            - net
         restart: always
         volumes:
             - ./redis/redis.conf:/etc/redis/redis.conf
