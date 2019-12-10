@@ -27,13 +27,13 @@ services:
         #lower_case_table_names表示表名不区分大小写
         command: mysqld --lower_case_table_names=1
     
-    ubuntu:
-        image: ubuntu:18.04
-        container_name: my_ubuntu
-        networks:
-            - net
-        restart: always
-        command: tail -F anything 
+   #ubuntu:
+   #     image: ubuntu:18.04
+   #    container_name: my_ubuntu
+   #    networks:
+   #        - net
+   #    restart: always
+   #    command: tail -F anything 
 
     redis:
         image: redis:latest
@@ -49,31 +49,45 @@ services:
             - ./redis/redis.conf:/etc/redis/redis.conf
         #启动redis服务并添加密码为：123456,并开启redis的持久化
         command: redis-server /etc/redis/redis.conf
-
+   
     go:
-        build: 
-            context: ./golang/
-            dockerfile: Dockerfile
+      image: golang:latest
+      volumes:
+              - ./golang:/golang
+             
+      working_dir: /golang
+      container_name: my_go
+      networks:
+              - net
+      depends_on:
+              - mysql
+              - redis
+      command: ./sproxy
+      tty: true  
+  #go:
+  #      build: 
+  #         context: ./golang/
+  #         dockerfile: Dockerfile
         #image: scratch
-        ports:
-            - "8080:8080"
-        container_name: my_go
-        depends_on:
-            - mysql
-            - redis
-        links:
-            - mysql
-            - redis
-        networks:
-            - net
-        environment:
-            SLEEP_SECOND: 4
+        #     ports:
+        #   - "8080:8080"
+        # container_name: my_go
+        #depends_on:
+        #      - mysql
+        #    - redis
+        #links:
+        #    - mysql
+        #    - redis
+        #networks:
+        #    - net
+        #environment:
+        #    SLEEP_SECOND: 4
         # volumes 是把本地所有的源码都映射到容器中。仅在本地开发时使用，上线部署时不可
         #volumes:
         #    - ./golang/src/:/go/src
         #working_dir: /go/src
         # entrypoint: ["/go/src/sproxy"]
-        tty: true
+        #tty: true
 
 
 networks:
