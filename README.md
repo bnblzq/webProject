@@ -1,4 +1,5 @@
 # 简单的使用说明
+服务器需要预先装好docker和docker-compose组件，可以google一下怎么装 ^_^
 
 在webProject/下面输入`docker-compose up` ，如果见到下图的提示，说明服务启动成功
 
