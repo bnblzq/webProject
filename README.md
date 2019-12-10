@@ -4,7 +4,7 @@
 
 
 
-![photo](http://www.usilab.cn:10080/sijianliu/webProject/src/master/fig/fig1.png)
+![photo](https://www.usilab.cn:10080/sijianliu/webProject/src/cac63fa9f3ceff31248338ff9363d3ba7d2ee773/fig/fig1.png)
 
 
 ---
