@@ -29,17 +29,19 @@ services:
 
 
     redis:
-        image: redis:3.2
+        image: redis:latest
         ports:
             # - "5672:5672"
             # - "15672:15672"
             - "6379:6379"
         container_name: my_redis
-        networks:
-            - net
+        #networks:
+        #    - net
         restart: always
+        volumes:
+            - ./redis/redis.conf:/etc/redis/redis.conf
         #启动redis服务并添加密码为：123456,并开启redis的持久化
-        command: redis-server --appendonly yes
+        command: redis-server /etc/redis/redis.conf
 
     go:
         build: 
@@ -57,6 +59,8 @@ services:
             - redis
         networks:
             - net
+        environment:
+            SLEEP_SECOND: 4
         # volumes 是把本地所有的源码都映射到容器中。仅在本地开发时使用，上线部署时不可
         #volumes:
         #    - ./golang/src/:/go/src
