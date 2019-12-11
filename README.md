@@ -10,5 +10,5 @@
 
 ---
 
-在webProject/golang/ 下面有 $\bold{sproxy} $ 可执行程序，每次docker-compse up的时候都会把这个程序复制进容器里面运行。因此，[sproxy程序](https://github.com/RicardoLanJ/coupons-seckill) 有修改的话，需要重新编译出可执行文件放到这个路径下面，再次执行docker-compse up 的动作。
+在webProject/golang/ 下面有 **sproxy** 可执行程序，每次docker-compse up的时候都会把这个程序复制进容器里面运行。因此，[sproxy程序](https://github.com/RicardoLanJ/coupons-seckill) 有修改的话，需要重新编译出可执行文件放到这个路径下面，再次执行docker-compse up 的动作。
 
