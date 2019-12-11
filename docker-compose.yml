@@ -64,7 +64,8 @@ services:
       depends_on:
               - mysql
               - redis
-      command: ./sproxy
+      command: /bin/bash -c "sleep 10 && ./sproxy"  #wait for mysql initialization
+
       tty: true  
   #go:
   #      build: 
