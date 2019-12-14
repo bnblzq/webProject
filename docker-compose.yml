@@ -58,7 +58,7 @@ services:
       working_dir: /golang
       container_name: my_go
       ports:
-              - "8080:8080"
+              - "20080:8080"
       networks:
               - net
       depends_on:
