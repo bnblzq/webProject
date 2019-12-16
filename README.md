@@ -15,6 +15,6 @@
 ---
 ### 测试是否连通
 首先确认第一步服务已经成功启动
-然后在命令行输入 `curl 0.0.0.0:8080/api/users -d '{"username":"liu","password":"123","kind":0}' -X POST -H "Content-Type:application/json"`
+然后在命令行输入 `curl 0.0.0.0:20080/api/users -d '{"username":"liu","password":"123","kind":0}' -X POST -H "Content-Type:application/json"`
 
 如果见到 `{"errMsg":"User existed"}` 或是 `{"errMsg":""}` 则说明已经和服务端通信正常
