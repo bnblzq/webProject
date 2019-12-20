@@ -4,7 +4,7 @@ use msxt;
 CREATE TABLE Users (
     id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     username varchar(20),
-    password varchar(32),
+    password varchar(128),
     kind int(1)
 );
 
